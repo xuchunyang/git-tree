@@ -19,6 +19,7 @@
 
 #define _GNU_SOURCE
 
+#include <git2.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>

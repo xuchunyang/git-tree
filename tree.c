@@ -80,9 +80,19 @@ extern bool colorize, ansilines, linktargetcolor;
 extern char *leftcode, *rightcode, *endcode;
 extern const struct linedraw *linedraw;
 
+git_repository *repo = NULL;
 
 int main(int argc, char **argv)
 {
+  int rc;
+  rc = git_repository_open_ext (&repo, ".", 0, NULL);
+  if (rc != 0)
+    {
+      const git_error *e = giterr_last ();
+      printf ("Error: %s\n", e->message);
+      exit (rc);
+    }
+  
   char **dirname = NULL;
   int i,j=0,k,n,optf,p,q,dtotal,ftotal,colored = FALSE;
   struct stat st;
@@ -718,6 +728,16 @@ struct _info **read_dir(char *dir, int *n)
     if (pattern && ((lst.st_mode & S_IFMT) == S_IFLNK) && !lflag) continue;
 #endif
 
+    int ignored;
+    int rc = git_ignore_path_is_ignored (&ignored, repo, path + 2);
+    if (rc != 0)
+      {
+        const git_error *e = giterr_last ();
+        printf ("Error: %s\n", e->message);
+        exit (rc);
+      }
+    if (ignored == 1) continue;
+    
     if (p == (ne-1)) dl = (struct _info **)xrealloc(dl,sizeof(struct _info *) * (ne += MINC));
     dl[p] = (struct _info *)xmalloc(sizeof(struct _info));
 

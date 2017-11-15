@@ -105,7 +105,9 @@ install: tree
 distclean:
 	if [ -f tree.o ]; then rm *.o; fi
 	rm -f *~
-	
 
 dist:	distclean
 	tar zcf ../tree-$(VERSION).tgz -C .. `cat .tarball`
+
+git-tree: $(OBJS) strverscmp.o
+	$(CC) $(LDFLAGS) -lgit2 -o $@ $^
