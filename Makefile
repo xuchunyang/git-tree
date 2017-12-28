@@ -81,7 +81,7 @@ CFLAGS=-ggdb -Wall -DLINUX -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
 
 #------------------------------------------------------------
 
-all:	tree
+all:	git-tree
 
 tree:	$(OBJS)
 	$(CC) $(LDFLAGS) -o $(TREE_DEST) $(OBJS)

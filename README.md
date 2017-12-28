@@ -44,11 +44,11 @@ as you can see `*.o` and `git-tree` are not shown by `git tree`, because they ar
 
 [libgit2](https://libgit2.github.com/) is required, e.g., install it via Homebrew:
 
-    $ brew info libgit2
+    $ brew install libgit2
 
 then build `git-tree`:
 
-    $ make git-tree
+    $ make
 
 finally put it into your `PATH`, and you will be able to use it via `git tree` (or `git-tree`):
 
